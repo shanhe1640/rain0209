@@ -247,3 +247,109 @@ Nickname: <INPUT NAME="nickname" SIZE="42">
 <P>Thank you for responding to this questionnaire.
 <P><INPUT TYPE=SUBMIT> <INPUT TYPE=RESET>
 </FORM>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食品购买页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .item label {
+            margin-right: 10px;
+        }
+        .item input {
+            width: 30px;
+            text-align: center;
+        }
+        .total {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .clear-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>食品购买页面</h1>
+    <div id="items">
+        <div class="item">
+            <label>油条 (2元)</label>
+            <button onclick="changeQuantity('油条', -1)">-</button>
+            <input type="number" id="油条" value="0" min="0" max="5">
+            <button onclick="changeQuantity('油条', 1)">+</button>
+        </div>
+        <div class="item">
+            <label>豆浆 (1元)</label>
+            <button onclick="changeQuantity('豆浆', -1)">-</button>
+            <input type="number" id="豆浆" value="0" min="0" max="5">
+            <button onclick="changeQuantity('豆浆', 1)">+</button>
+        </div>
+        <div class="item">
+            <label>煎饼 (8元)</label>
+            <button onclick="changeQuantity('煎饼', -1)">-</button>
+            <input type="number" id="煎饼" value="0" min="0" max="5">
+            <button onclick="changeQuantity('煎饼', 1)">+</button>
+        </div>
+        <div class="item">
+            <label>豆腐脑 (4元)</label>
+            <button onclick="changeQuantity('豆腐脑', -1)">-</button>
+            <input type="number" id="豆腐脑" value="0" min="0" max="5">
+            <button onclick="changeQuantity('豆腐脑', 1)">+</button>
+        </div>
+    </div>
+    <div class="total">总价: <span id="totalPrice">0</span> 元</div>
+    <button class="clear-button" onclick="clearAll()">全部清空</button>
+
+    <script>
+        const prices = {
+            "油条": 2,
+            "豆浆": 1,
+            "煎饼": 8,
+            "豆腐脑": 4
+        };
+
+        function changeQuantity(item, change) {
+            let quantity = parseInt(document.getElementById(item).value);
+            quantity += change;
+            if (quantity < 0) quantity = 0;
+            if (quantity > 5) quantity = 5;
+            document.getElementById(item).value = quantity;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let totalPrice = 0;
+            for (const item in prices) {
+                let quantity = parseInt(document.getElementById(item).value);
+                totalPrice += quantity * prices[item];
+            }
+            document.getElementById("totalPrice").innerText = totalPrice;
+        }
+
+        function clearAll() {
+            for (const item in prices) {
+                document.getElementById(item).value = 0;
+            }
+            updateTotal();
+        }
+
+        // 初始化总价
+        updateTotal();
+    </script>
+</body>
+</html>
